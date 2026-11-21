@@ -1,0 +1,16 @@
+{
+  "name": "g3hub",
+  "version": "1.3.0",
+  "description": "IPTV hub for the G3 launcher (Xtream/M3U cache, curation, search, web admin)",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node test/smoke.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

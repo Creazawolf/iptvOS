@@ -1,0 +1,9 @@
+{
+  "name": "G3 Hub",
+  "short_name": "G3 Hub",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#050507",
+  "theme_color": "#050507",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

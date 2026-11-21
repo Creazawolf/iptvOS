@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>__TITLE__</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="stage">
+    <p class="kicker">Your own app</p>
+    <h1>__TITLE__</h1>
+    <p class="lead">Edit <code>apps/__SLUG__/</code> and run <code>npm run deploy -- __SLUG__</code>.</p>
+
+    <div class="buttons">
+      <button class="btn" data-focusable data-autofocus data-action="hello">Say hello</button>
+      <button class="btn" data-focusable data-action="youtube">Open YouTube</button>
+      <button class="btn" data-focusable data-action="back">Back</button>
+    </div>
+
+    <p class="status" id="status" role="status"></p>
+  </main>
+
+  <script src="lib/tv.js"></script>
+  <script src="lib/nav.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

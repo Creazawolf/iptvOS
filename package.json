@@ -1,0 +1,30 @@
+{
+  "name": "iptvos",
+  "version": "3.4.0",
+  "description": "Custom home screen launcher with IPTV and an optional hub for LG webOS TVs",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:build": "node scripts/dev.mjs --build",
+    "hub": "node hub/server.mjs --data build/hub-data",
+    "tv": "node scripts/tv.mjs",
+    "deploy": "node scripts/tv.mjs deploy",
+    "new": "node scripts/new-app.mjs",
+    "icons": "node scripts/make-icons.mjs",
+    "wallpapers": "node scripts/make-wallpapers.mjs",
+    "test": "node scripts/i18n-check.mjs && node hub/test/smoke.mjs && node hub/test/subs.mjs && node hub/test/wallpapers.mjs && node scripts/init-test.mjs && node scripts/service-test.mjs && node scripts/ui-test.mjs && node scripts/ui-test.mjs --lang en && node scripts/ui-test.mjs --build",
+    "i18n:check": "node scripts/i18n-check.mjs",
+    "test:ui": "node scripts/ui-test.mjs",
+    "test:tv": "node scripts/init-test.mjs && node scripts/service-test.mjs"
+  },
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@webos-tools/cli": "^3.2.6",
+    "esbuild": "^0.25.12",
+    "simple-icons": "^16.36.0"
+  },
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  }
+}

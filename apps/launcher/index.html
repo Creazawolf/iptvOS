@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Home</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/settings.css">
+  <link rel="stylesheet" href="css/tv.css">
+  <link rel="stylesheet" href="css/media.css">
+  <link rel="stylesheet" href="css/player.css">
+</head>
+<body>
+  <!-- Background (filled by js/core/wallpaper.js) + video (IPTV plays behind the views) -->
+  <div class="wallpaper" aria-hidden="true"></div>
+  <div class="player-layer" id="player-layer">
+    <video id="video" class="video" playsinline preload="none"></video>
+  </div>
+
+  <section class="view view-home" data-view="home" hidden></section>
+  <section class="view view-tv" data-view="tv" hidden></section>
+  <section class="view view-settings" data-view="settings" hidden></section>
+
+  <div class="ambient" id="ambient" hidden>
+    <!-- Aerial videos in ambient mode (js/core/idle.js). The veil fades through black between videos. -->
+    <video class="ambient-video" id="ambient-video" muted playsinline preload="none"></video>
+    <div class="ambient-veil"></div>
+    <div class="ambient-shade"></div>
+    <div class="ambient-place"><b id="ambient-place"></b><span id="ambient-poi"></span></div>
+    <div class="ambient-inner">
+      <div class="ambient-time" id="ambient-time"></div>
+      <div class="ambient-sub" id="ambient-sub"></div>
+    </div>
+    <div class="ambient-credit" id="ambient-credit"></div>
+  </div>
+  <div id="overlays"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/core/perf.js"></script>
+  <script src="lib/tv.js"></script>
+  <script src="lib/nav.js"></script>
+  <script src="config.js"></script>
+  <script src="config.local.js" onerror="this.remove()"></script>
+  <script src="js/dev/mocks.js" data-dev></script>
+
+  <script src="js/core/store.js"></script>
+  <script src="js/core/i18n.js"></script>
+  <script src="js/i18n/en.js"></script>
+  <script src="js/i18n/sv.js"></script>
+  <script src="js/core/router.js"></script>
+  <script src="js/core/ui.js"></script>
+  <script src="js/core/net.js"></script>
+  <script src="js/core/icons.js"></script>
+  <script src="js/core/brands.js"></script>
+  <script src="js/core/root.js"></script>
+  <script src="js/core/art.js"></script>
+  <script src="js/core/apps.js"></script>
+  <script src="js/core/wallpaper.js"></script>
+  <script src="js/core/idle.js"></script>
+
+  <script src="js/widgets/widgets.js"></script>
+  <script src="js/widgets/clock.js"></script>
+  <script src="js/widgets/weather.js"></script>
+  <script src="js/widgets/live.js"></script>
+
+  <!-- IPTV (owned by js/iptv/, see docs/ARCHITECTURE.md §2). data-lazy: in the package (npm run deploy)
+       they end up in iptv-ui.js, which is loaded only when the TV view is needed or the TV is idle. -->
+  <script src="js/iptv/util.js"></script>
+  <script src="js/iptv/xtream.js"></script>
+  <script src="js/iptv/source.js"></script>
+  <script src="js/iptv/epg.js"></script>
+  <script src="js/iptv/player.js"></script>
+  <script src="js/iptv/tracks.js"></script>
+  <script src="js/iptv/subs.js"></script>
+  <script src="js/iptv/options.js"></script>
+  <script src="js/iptv/reminders.js"></script>
+  <script src="js/iptv/keyboard.js" data-lazy="iptv-ui"></script>
+  <script src="js/iptv/tv-view.js" data-lazy="iptv-ui"></script>
+  <script src="js/iptv/chlist.js" data-lazy="iptv-ui"></script>
+  <script src="js/iptv/playback.js" data-lazy="iptv-ui"></script>
+  <script src="js/iptv/media.js" data-lazy="iptv-ui"></script>
+  <script src="js/iptv/guide.js" data-lazy="iptv-ui"></script>
+  <script src="js/iptv/search.js" data-lazy="iptv-ui"></script>
+  <script src="js/iptv/settings-iptv.js"></script>
+  <script src="js/iptv/lazy.js"></script>
+
+  <script src="js/views/tiles.js"></script>
+  <script src="js/views/home.js"></script>
+  <script src="js/views/settings.js"></script>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+/* The home screen — tvOS 26: dock + top shelf, then rows that slide up. */
+
+.view-home { overflow: hidden; }
+
+/* Dark tint at the top in grid mode (the status bar and rows sliding out). */
+.home-scrim {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 230px;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.4) 55%, rgba(0, 0, 0, 0) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.view-home[data-mode="grid"] .home-scrim { opacity: 1; }
+
+/* --- Status in the top right ----------------------------------------------------------- */
+
+.home-status {
+  position: absolute;
+  top: 54px;
+  right: var(--safe-x);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.45);
+}
+
+.hs-weather {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+  color: var(--label-2);
+}
+
+.hs-weather:empty { display: none; }
+.hs-weather .icon { font-size: 30px; stroke-width: 1.8; }
+
+/* --- Top shelf: text for "Continue watching" above the dock ------------------------- */
+
+.home-shelf {
+  position: absolute;
+  left: var(--safe-x);
+  bottom: 360px;
+  z-index: 3;
+  max-width: 1100px;
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  transition: opacity 0.35s ease, transform 0.45s var(--ease);
+  pointer-events: none;
+}
+
+.home-shelf.is-in { opacity: 1; transform: none; }
+.view-home[data-mode="grid"] .home-shelf { opacity: 0; }
+
+.shelf-kicker {
+  margin: 0 0 12px;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--label-2);
+}
+
+.shelf-title-big {
+  margin: 0;
+  font-size: 64px;
+  font-weight: 700;
+  letter-spacing: -0.026em;
+  line-height: 1.04;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.4);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.shelf-meta {
+  margin: 16px 0 0;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--label-2);
+}
+
+.shelf-meta b { color: var(--label); font-weight: 600; }
+
+.shelf-progress {
+  width: 360px;
+  margin-top: 20px;
+  height: 5px;
+}
+
+.shelf-progress > i { width: var(--p, 0%); }
+
+/* --- The page --------------------------------------------------------------------------- */
+
+.home-page {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  transition: transform 0.42s var(--ease);
+  will-change: transform;
+}
+
+.home-section { position: relative; }
+.home-section + .home-section { margin-top: 66px; }
+.home-section.is-dock + .home-section { margin-top: 150px; }
+[data-section="channels"] + .home-section { margin-top: 104px; }
+
+.home-section .shelf-title {
+  margin: 0 var(--safe-x) 20px;
+}
+
+[data-line],
+.home-page .shelf-title,
+.home-notice { transition: opacity 0.3s ease; }
+[data-line].is-above,
+.home-page .shelf-title.is-above,
+.home-notice.is-above { opacity: 0; }
+
+/* The dock: a little more room below for the label. Channels have two lines below the focused tile. */
+.home-dock .shelf-viewport { padding-bottom: 90px; margin-bottom: -60px; }
+[data-section="channels"] .shelf-viewport { padding-bottom: 128px; margin-bottom: -88px; }
+
+/* The "All apps" grid (5 columns of 320 px, like Apple TV). */
+.home-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 92px;
+  padding: 0 var(--safe-x) 200px;
+}
+
+.grid-row {
+  display: flex;
+  gap: var(--gap);
+}
+
+.home-notice {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: -4px var(--safe-x) 34px;
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--label-2);
+}
+
+.home-notice .icon { font-size: 28px; color: var(--label-3); }
+.home-notice b { color: var(--label); font-weight: 600; }
+
+/* --- App tiles -------------------------------------------------------------------------- */
+
+.tile.is-dim .tile-face > :not(.shine) { opacity: 0.45; }
+.tile.is-dim .tile-face { filter: saturate(0.4); }
+
+.tile-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.brand-mark { width: 96px; height: 96px; }
+
+/* Action tiles (Choose apps, Set up IPTV …): subtle glass. */
+.tile-action .tile-face {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.1);
+}
+
+.tile-action .tile-glyph { font-size: 56px; color: var(--label-2); }
+.tile-action.is-focused .tile-glyph { color: #fff; }
+
+/* --- Channel tiles ---------------------------------------------------------------------- */
+
+.tile-channel .tile-face {
+  background: linear-gradient(160deg, #303036 0%, #1a1a1e 100%);
+}
+
+.ch-logo {
+  max-width: 62%;
+  max-height: 56%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+}
+
+.ch-name {
+  padding: 0 26px;
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.ch-num {
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--label-3);
+}
+
+.ch-progress {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 14px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ch-progress.is-on { opacity: 1; }
+.ch-progress > i { display: block; height: 100%; width: 0; background: #fff; border-radius: inherit; }
+
+.tile-channel .tile-label { line-height: 1.3; }
+.tile-channel .tile-label b { display: block; font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+.ch-now { display: block; color: var(--label-2); font-weight: 500; overflow: hidden; text-overflow: ellipsis; }
+.ch-now:empty { display: none; }
+
+/* --- Continue watching ----------------------------------------------------------------- */
+
+.card-continue .tile-face { background: #1c1c1f; }
+
+.card-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0) 70%);
+}
+
+.card-text {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 30px;
+  text-align: left;
+}
+
+.card-text b {
+  display: block;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-text span {
+  display: block;
+  margin-top: 2px;
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--label-2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-progress {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 16px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.25);
+  overflow: hidden;
+}
+
+.card-progress > i { display: block; height: 100%; background: #fff; border-radius: inherit; }
+
+.card-continue .tile-label {
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 400px;
+  margin-top: 26px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--label-2);
+  opacity: 0;
+  transform: translate3d(-50%, -6px, 0);
+  transition: opacity 0.18s ease, transform var(--t-focus) var(--ease);
+}
+
+.card-continue.is-focused .tile-label { opacity: 1; transform: translate3d(-50%, 0, 0); }
+
+/* --- Widgets (optional row) --------------------------------------------------------------- */
+
+.tile-widget .tile-face {
+  justify-content: flex-start;
+  align-items: stretch;
+  background: linear-gradient(160deg, #2c2c32 0%, #18181c 100%);
+}
+
+.tile-widget.size-2 { width: calc(var(--col) * 2 + var(--gap)); }
+
+.wg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding: 24px 30px;
+  text-align: left;
+}
+
+.wg-empty { align-items: center; gap: 12px; font-size: 22px; color: var(--label-2); text-align: center; }
+.wg-empty .icon { font-size: 44px; }
+
+.wg-clock .wg-c-time { font-size: 72px; font-weight: 300; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.wg-clock .wg-c-date { font-size: 20px; font-weight: 500; color: var(--label-2); }
+
+.wg-weather { gap: 14px; }
+.wg-w-now { display: flex; align-items: center; gap: 18px; }
+.wg-w-icon { font-size: 56px; display: flex; }
+.wg-w-temp { font-size: 64px; font-weight: 300; letter-spacing: -0.03em; }
+.wg-w-meta { font-size: 19px; line-height: 1.35; color: var(--label-2); }
+.wg-w-meta b { display: block; color: var(--label); font-size: 21px; font-weight: 600; }
+.wg-w-hours { display: flex; justify-content: space-between; margin: 0; padding: 0; list-style: none; }
+.wg-w-hours li { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 17px; color: var(--label-2); }
+.wg-w-hours .icon { font-size: 24px; color: var(--label); }
+.wg-w-hours b { color: var(--label); font-weight: 600; }
+
+.wg-live { gap: 10px; }
+.wg-l-head { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--label-2); }
+.wg-l-head i { width: 9px; height: 9px; border-radius: 50%; background: var(--red); }
+.wg-l-row { display: flex; align-items: center; gap: 16px; }
+.wg-l-row img, .wg-l-noimg { width: 56px; height: 34px; object-fit: contain; flex: none; font-size: 15px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.wg-l-text { flex: 1; min-width: 0; }
+.wg-l-text b { display: block; font-size: 19px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 5px; }
+.wg-l-text .progress { height: 4px; }

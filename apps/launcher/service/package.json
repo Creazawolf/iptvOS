@@ -1,0 +1,6 @@
+{
+  "name": "com.g3custom.launcher.service",
+  "version": "3.4.0",
+  "description": "Fetches data for the launcher (without CORS limits)",
+  "main": "service.js"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "com.g3custom.launcher.service",
+  "description": "G3 Custom launcher service",
+  "services": [
+    {
+      "name": "com.g3custom.launcher.service"
+    }
+  ]
+}

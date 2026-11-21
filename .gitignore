@@ -1,0 +1,9 @@
+node_modules/
+build/
+dist/
+.DS_Store
+apps/*/config.local.js
+hub/data/
+
+# Local notes, not published
+docs/PLAN-optimering.md
